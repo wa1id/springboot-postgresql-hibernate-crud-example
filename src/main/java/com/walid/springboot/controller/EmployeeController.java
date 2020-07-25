@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,6 +37,19 @@ public class EmployeeController {
     public Employee createEmployee(@RequestBody Employee employee) {
         return employeeRepository.save(employee);
     }
+
     //PUT employee (update)
+    @PutMapping("employees/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") Long employeeId,@Valid @RequestBody Employee updatedEmployee) throws ResourceNotFoundException {
+        Employee employeeToUpdate = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id: " + employeeId));
+
+        employeeToUpdate.setFirstName(updatedEmployee.getFirstName());
+        employeeToUpdate.setLastName(updatedEmployee.getLastName());
+        employeeToUpdate.setEmail(updatedEmployee.getEmail());
+
+        return ResponseEntity.ok(employeeRepository.save(employeeToUpdate));
+    }
+
     //DELETE employee
 }
