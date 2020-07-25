@@ -19,6 +19,10 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
+    //must create default constructor otherwise you get hibernate.InstantiationException: No default constructor for entity
+    public Employee() {
+    }
+
     public Employee(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
