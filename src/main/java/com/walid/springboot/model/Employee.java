@@ -1,6 +1,7 @@
 package com.walid.springboot.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "employees")
@@ -11,12 +12,15 @@ public class Employee {
     private long id;
 
     @Column(name = "first_name")
+    @NotNull
     private String firstName;
 
     @Column(name = "last_name")
+    @NotNull
     private String lastName;
 
     @Column(name = "email")
+    @NotNull
     private String email;
 
     //must create default constructor otherwise you get hibernate.InstantiationException: No default constructor for entity
